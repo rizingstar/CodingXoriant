@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "presidents",
+      "launchUrl": "api/presidents",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "CodingXoriant": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "presidents",
+      "launchUrl": "api/presidents",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

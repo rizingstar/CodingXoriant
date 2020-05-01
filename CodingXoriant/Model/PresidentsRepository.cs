@@ -7,54 +7,54 @@ namespace CodingXoriant.Model
 {
     public class PresidentsRepository : IPresidentsRepository
     {
-        private List<President> _presidentsList;
+        private PresidentContext _presidentContext;
 
-        public PresidentsRepository()
+        public PresidentsRepository(PresidentContext presidentContext)
         {
+            _presidentContext = presidentContext;
             InitializeData();
         }
 
         public IEnumerable<President> All
         {
-            get { return _presidentsList; }
+            get { return _presidentContext.Presidents; }
         }
 
-        public bool DoesItemExist(string name)
+        public bool DoesItemExist(int id)
         {
-            return _presidentsList.Any(item => item.PresidentName == name);
+            return _presidentContext.Presidents.Any(x => x.Id == id);
         }
 
-        public President Find(string name)
+        public President Find(int id)
         {
-            return _presidentsList.FirstOrDefault(item => item.PresidentName == name);
+            return _presidentContext.Presidents.Find(id);
         }
 
         public void Insert(President president)
         {
-            _presidentsList.Add(president);
+            _presidentContext.Add(president);
+            _presidentContext.SaveChanges();
         }
 
         public void Update(President president)
         {
-            var presidentLocal = Find(president.PresidentName);
-            var index = _presidentsList.IndexOf(presidentLocal);
-            _presidentsList.RemoveAt(index);
-            _presidentsList.Insert(index, president);
+            _presidentContext.Update(president);
+            _presidentContext.SaveChanges();
         }
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
-            _presidentsList.Remove(Find(id));
+            _presidentContext.Remove(Find(id));
+            _presidentContext.SaveChanges();
         }
 
         private void InitializeData()
         {
-            _presidentsList = new List<President>();
-
             using (StreamReader r = new StreamReader(@"/Users/nomankhan/Projects/CodingXoriant/CodingXoriant/Data/Presidents.json"))
             {
                 string json = r.ReadToEnd();
-                _presidentsList = JsonConvert.DeserializeObject<List<President>>(json);
+                _presidentContext.Presidents.AddRange(JsonConvert.DeserializeObject<List<President>>(json));
+                _presidentContext.SaveChanges();
             }
         }
     }

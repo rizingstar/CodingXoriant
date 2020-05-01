@@ -1,6 +1,7 @@
 using CodingXoriant.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +21,8 @@ namespace CodingXoriant
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IPresidentsRepository, PresidentsRepository>();
+            services.AddDbContext<PresidentContext>(opt => opt.UseInMemoryDatabase("Presidents"));
+            services.AddScoped<IPresidentsRepository, PresidentsRepository>();
         }
 
 

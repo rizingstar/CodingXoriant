@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodingXoriant.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")] 
     public class PresidentsController: ControllerBase
     {
         IPresidentsRepository _presidentsRepository;
@@ -17,6 +17,29 @@ namespace CodingXoriant.Controllers
         public IActionResult List()
         {
             return Ok(_presidentsRepository.All);
+        }
+
+        // POST: api/Presidents
+        [HttpPost]
+        public ActionResult<President> PostPresident(President president)
+        {
+            _presidentsRepository.Insert(president);
+
+            return CreatedAtAction(nameof(GetPresident), new { id = president.Id }, president);
+        }
+
+        // GET: api/Presidents/5
+        [HttpGet("{id}")]
+        public ActionResult<President> GetPresident(int id)
+        {
+            var president = _presidentsRepository.Find(id);
+
+            if (president == null)
+            {
+                return NotFound();
+            }
+
+            return president;
         }
     }
 }
