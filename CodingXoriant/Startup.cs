@@ -1,3 +1,4 @@
+using AutoMapper;
 using CodingXoriant.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ namespace CodingXoriant
             services.AddControllers();
             services.AddDbContext<PresidentContext>(opt => opt.UseInMemoryDatabase("Presidents"));
             services.AddScoped<IPresidentsRepository, PresidentsRepository>();
+            services.AddAutoMapper(typeof(Startup));
         }
 
 

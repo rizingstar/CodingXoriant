@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CodingXoriant.Model
 {
@@ -10,10 +9,5 @@ namespace CodingXoriant.Model
         }
 
         public DbSet<President> Presidents { get; set; }
-
-        internal bool Any(Func<object, bool> p)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

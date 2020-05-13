@@ -12,7 +12,8 @@ namespace CodingXoriant.Model
         public PresidentsRepository(PresidentContext presidentContext)
         {
             _presidentContext = presidentContext;
-            InitializeData();
+            if (_presidentContext.Presidents.Count()== 0)
+                InitializeData();
         }
 
         public IEnumerable<President> All
@@ -50,6 +51,7 @@ namespace CodingXoriant.Model
 
         private void InitializeData()
         {
+            _presidentContext.Presidents.RemoveRange(_presidentContext.Presidents);
             using (StreamReader r = new StreamReader(@"/Users/nomankhan/Projects/CodingXoriant/CodingXoriant/Data/Presidents.json"))
             {
                 string json = r.ReadToEnd();
